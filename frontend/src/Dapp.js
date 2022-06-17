@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Header } from "antd/lib/layout/layout";
 import Web3ModalSetup from "./helpers/Web3ModalSetup"
 import Account from "./components/Account"
 import ThemeSwitcher from "./components/ThemeSwitch";
 import Address from "./components/Address";
 import { useSelector, useDispatch } from "react-redux"
 import { setAddress } from "./store/slices/accountSlice";
+
+import { Layout } from 'antd';
+const { Header, Footer, Content } = Layout;
 
 const { ethers } = require("ethers");
 
@@ -73,23 +75,28 @@ export default function Dapp() {
 
     return (
         <div className="Dapp">
-            <Header>
-                <div style={{ position: "relative", display: "flex", flexDirection: "column" }}>
-                    <div style={{ display: "flex", flex: 1 }}>
-                        <div>
-                            {address ? <Address address={address} /> : ""}
+            <Layout>
+                <Header>
+                    <div style={{ position: "relative", display: "flex", flexDirection: "column" }}>
+                        <div style={{ display: "flex", flex: 1 }}>
+                            <div>
+                                {address ? <Address address={address} /> : ""}
+                            </div>
+                            <Account
+                                web3Modal={web3Modal}
+                                loadWeb3Modal={loadWeb3Modal}
+                                logoutOfWeb3Modal={logoutOfWeb3Modal}
+                            />
                         </div>
-                        <Account
-                            web3Modal={web3Modal}
-                            loadWeb3Modal={loadWeb3Modal}
-                            logoutOfWeb3Modal={logoutOfWeb3Modal}
-                        />
                     </div>
-                </div>
-            </Header>
-            <h1>
-                Hiiii
-            </h1>
+                </Header>
+                <Content>
+                    <h1>
+                        Hiiii
+                    </h1>
+                </Content>
+                <Footer>Footer</Footer>
+            </Layout>
             <ThemeSwitcher />
         </div>
     )
