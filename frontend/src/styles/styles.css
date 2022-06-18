@@ -1,0 +1,7 @@
+.textaligncenter{
+    text-align: center;
+    font-size: 1.5rem;
+}
+.textaligncenter .value{
+    font-size: 2.5rem;
+}
