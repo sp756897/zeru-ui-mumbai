@@ -16,11 +16,10 @@ export default function Account({
 
 
   return (
-    <div style={{ display: "flex" }}>
+    <div >
       {web3Modal && (
         <Button
-          style={{ marginLeft: 8 }}
-          shape="round"
+          style={{ borderRadius:'0.35rem',fontSize:'1rem',fontWeight:'500',}}
           onClick={accountButtonInfo.action}
         >
           {accountButtonInfo.name}
