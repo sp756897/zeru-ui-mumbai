@@ -6,7 +6,11 @@ import Address from "./components/Address";
 import { useSelector, useDispatch } from "react-redux"
 import { setAddress } from "./store/slices/accountSlice";
 
+import logo from './images/logo.png'
+import name from './images/name.png'
 import { Layout } from 'antd';
+import { Tabs } from 'antd';
+const { TabPane } = Tabs;
 const { Header, Footer, Content } = Layout;
 
 const { ethers } = require("ethers");
@@ -76,26 +80,37 @@ export default function Dapp() {
     return (
         <div className="Dapp">
             <Layout>
-                <Header>
-                    <div style={{ position: "relative", display: "flex", flexDirection: "column" }}>
-                        <div style={{ display: "flex", flex: 1 }}>
-                            <div>
-                                {address ? <Address address={address} /> : ""}
-                            </div>
-                            <Account
-                                web3Modal={web3Modal}
-                                loadWeb3Modal={loadWeb3Modal}
-                                logoutOfWeb3Modal={logoutOfWeb3Modal}
-                            />
-                        </div>
+                <Header style={{ display: "flex", alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
+                   <div style={{alignItems:'flex-start'}}>
+                    <img src={logo} width={30}/>
+                    <img src={name} width={100}/>
+                   </div>
+                    <div>
+                        {address ? <Address address={address} /> : ""}
                     </div>
+                    <Account
+                        web3Modal={web3Modal}
+                        loadWeb3Modal={loadWeb3Modal}
+                        logoutOfWeb3Modal={logoutOfWeb3Modal}
+                    />
+
                 </Header>
                 <Content>
-                    <h1>
-                        Hiiii
-                    </h1>
+                    <Tabs defaultActiveKey="Dashboard" centered>
+                        <TabPane tab="Dashboard" key="Dashboard">
+                            Dashboard
+                        </TabPane>
+                        <TabPane tab="Staking" key="Staking">
+                            Staking
+                        </TabPane>
+                        <TabPane tab="Credit" key="Credit">
+                            Credit
+                        </TabPane>
+                    </Tabs>
                 </Content>
-                <Footer>Footer</Footer>
+                <Footer>
+                ⒸZERU 
+                </Footer>
             </Layout>
             <ThemeSwitcher />
         </div>
