@@ -31,11 +31,11 @@ export default function Dashboard() {
             <Row gutter={[8, 16]}>
                 <Col span={12}>
                     Supplied Assets
-                    <Assettable />
+                    <Assettable titles={supplytable}/>
                 </Col>
                 <Col span={12} >
                     Borrowed Asset
-                    <Assettable/>
+                    <Assettable titles={supplytable}/>
                 </Col>
                 <Col span={12} >
                     Supply Assets
@@ -43,7 +43,7 @@ export default function Dashboard() {
                 </Col>
                 <Col span={12} >
                     Borrow Assets
-                    <Assettable titles={borrowtable}/>
+                    <Assettable titles={supplytable}/>
                 </Col>
             </Row>
         </div>
