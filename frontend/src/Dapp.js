@@ -10,6 +10,12 @@ import logo from './images/logo.png'
 import name from './images/name.png'
 import { Layout } from 'antd';
 import { Tabs } from 'antd';
+import Dashboard from "./components/Dashboard";
+import Staking from "./components/Staking";
+import Credit from "./components/Credit";
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
+
 const { TabPane } = Tabs;
 const { Header, Footer, Content } = Layout;
 
@@ -81,11 +87,12 @@ export default function Dapp() {
         <div className="Dapp">
             <Layout>
                 <Header style={{ display: "flex", alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
-                   <div style={{alignItems:'flex-start'}}>
-                    <img src={logo} width={30}/>
-                    <img src={name} width={100}/>
-                   </div>
+                    <div style={{ alignItems: 'flex-start' }}>
+                        <img src={logo} width={30} />
+                        <img src={name} width={100} />
+                    </div>
                     <div>
+                        <Avatar icon={<UserOutlined />} style={{marginBottom:'0.7rem',marginRight:'0.6rem'}}/>
                         {address ? <Address address={address} /> : ""}
                     </div>
                     <Account
@@ -98,18 +105,18 @@ export default function Dapp() {
                 <Content>
                     <Tabs defaultActiveKey="Dashboard" centered>
                         <TabPane tab="Dashboard" key="Dashboard">
-                            Dashboard
+                            <Dashboard />
                         </TabPane>
                         <TabPane tab="Staking" key="Staking">
-                            Staking
+                            <Staking />
                         </TabPane>
                         <TabPane tab="Credit" key="Credit">
-                            Credit
+                            <Credit />
                         </TabPane>
                     </Tabs>
                 </Content>
-                <Footer>
-                ⒸZERU 
+                <Footer style={{background:'#191919',color:'white'}}>
+                    ⒸZERU
                 </Footer>
             </Layout>
             <ThemeSwitcher />
