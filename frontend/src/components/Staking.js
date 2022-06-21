@@ -10,7 +10,7 @@ const flexcss = { display: 'flex', alignItems: 'center', justifyContent: 'space-
 const { Title } = Typography;
 export default function Staking() {
     return (
-        <div>
+        <div className='stakingdiv'>
             <Row className='textaligncenter'>
                 <Col span={12} className='text'>
                     Funds in safety mode

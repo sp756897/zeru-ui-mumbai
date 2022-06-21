@@ -1,5 +1,6 @@
 import React from 'react'
-import { Space, Table } from 'antd';
+import { Button, Space, Table } from 'antd';
+import { Switch } from 'antd';
 
 export default function SuppliedAssetTable(props) {
     const columns = [
@@ -26,15 +27,18 @@ export default function SuppliedAssetTable(props) {
             title: props.titles.c4,
             key: 'collateral',
             dataIndex: 'collateral',
-            align:'center'
+            align:'center',
+            render:(_,record)=>(
+                <Switch defaultChecked />
+            ),
         },
         {
             title: '',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <a>Supply</a>
-                    <a>Details</a>
+                    <Button type='primary'><a>Withdraw</a></Button>
+                    <Button><a>Supply</a></Button>
                 </Space>
             ),
             align:'center'

@@ -46,19 +46,19 @@ export default function Dashboard() {
             </Row>
             <Row gutter={[32, 24]} style={{ padding: '0 60px 40px 60px' }}>
                 <Col span={12}>
-                    Supplied Assets
+                    <h2>Supplied Assets</h2>
                     <SuppliedAssetTable titles={suppliedtable} />
                 </Col>
                 <Col span={12} >
-                    Borrowed Asset
+                    <h2>Borrowed Asset</h2>
                     <BorrowedAssetTable titles={borrowedtable} />
                 </Col>
                 <Col span={12} >
-                    Supply Assets
+                    <h2>Supply Assets</h2>
                     <SupplyAssetTable titles={supplytable} />
                 </Col>
                 <Col span={12} >
-                    Borrow Assets
+                    <h2>Borrow Assets</h2>
                     <BorrowAssetTable titles={borrowtable} />
                 </Col>
             </Row>

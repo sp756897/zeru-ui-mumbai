@@ -1,5 +1,5 @@
 import React from 'react'
-import { Space, Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 
 export default function BorrowAssetTable(props) {
     const columns = [
@@ -33,8 +33,8 @@ export default function BorrowAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <a>Supply</a>
-                    <a>Details</a>
+                    <Button type='primary'><a>Borrow</a></Button>
+                    <Button><a>details</a></Button>
                 </Space>
             ),
             align:'center'
@@ -46,21 +46,21 @@ export default function BorrowAssetTable(props) {
             asset: 'ETH',
             balance: 0,
             apy: '12%',
-            collateral: 'yes',
+            collateral: '12.33%',
         },
         {
             key: '2',
             asset: 'ETH',
             balance: 0,
             apy: '46%',
-            collateral: 'yes',
+            collateral: '67.54%',
         },
         {
             key: '3',
             asset: 'ETH',
             balance: 0,
             apy: '23%',
-            collateral: 'yes',
+            collateral: '76.4%',
         },
     ];
     return (

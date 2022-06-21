@@ -1,5 +1,5 @@
 import React from 'react'
-import { Space, Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 
 export default function SupplyAssetTable(props) {
   const columns = [
@@ -33,8 +33,8 @@ export default function SupplyAssetTable(props) {
         key: 'action',
         render: (_, record) => (
             <Space size="middle" >
-                <a>Supply</a>
-                <a>Details</a>
+                <Button type='primary'><a>Supply</a></Button>
+                <Button><a>details</a></Button>
             </Space>
         ),
         align:'center'

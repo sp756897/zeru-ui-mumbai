@@ -8,7 +8,7 @@ const { Title } = Typography;
 
 export default function Credit() {
   return (
-    <div>
+    <div className='creditdiv'>
         <Row>
             <Col span={12} style={{marginLeft:'auto',marginRight:'auto',textAlign:'center'}}>
             Available Credit:<br/>
