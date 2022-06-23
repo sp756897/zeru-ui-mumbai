@@ -20,11 +20,7 @@ const prevTheme = window.localStorage.getItem("theme");
 ReactDOM.render(
   <Provider store={store}>
     <ThemeSwitcherProvider themeMap={themes} defaultTheme={prevTheme || "light"}>
-      <HashRouter
-        basename={optionalString}
-        getUserConfirmation={optionalFunc}
-        hashType={optionalString}
-      >
+      <HashRouter>
         <Dapp />
       </HashRouter>
 
