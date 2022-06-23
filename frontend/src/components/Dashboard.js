@@ -13,16 +13,16 @@ const borrowtable = { c1: 'Assets', c2: 'Available', c3: 'APY,Variable', c4: 'AP
 
 export default function Dashboard() {
     return (
-        <div>
-            <Row className='dashboard-details' style={{ height: '10rem' }}>
-                <Col span={4}>
+        <div className='dashboard' id='dashboard'>
+            <Row className='dashboard-details' style={{ height: '10rem',display:'flex',alignItems:'center',justifyContent:'space-around' }}>
+                {/* <Col span={4}>
                     Credit Accumulated
                     <p>$30</p>
                 </Col>
                 <Col span={4}>
                     Supply Balance
                     <p>$30</p>
-                </Col>
+                </Col> */}
                 <Col span={4}>
                     Net Supply Balance
                     <p>$60</p>
@@ -35,16 +35,16 @@ export default function Dashboard() {
                     Borrow Balance
                     <p>$146</p>
                 </Col>
-                <Col span={4}>
+                {/* <Col span={4}>
                     Health Factor
                     <p>1.34</p>
-                </Col>
+                </Col> */}
             </Row>
             <Row style={{padding:'0 200px 40px 200px'}}>
                 Borrow Limit
                 <Progress type='line' percent={10} />
             </Row>
-            <Row gutter={[32, 24]} style={{ padding: '0 60px 40px 60px' }}>
+            <Row gutter={[32, 24]} style={{ padding: '0 60px 40px 60px',fontFamily:'Inter' }}>
                 <Col span={12}>
                     <h2>Supplied Assets</h2>
                     <SuppliedAssetTable titles={suppliedtable} />
