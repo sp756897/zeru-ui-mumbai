@@ -1,6 +1,9 @@
 body{
     font-family: 'Inter', sans-serif;
 }
+.Dapp{
+    font-family: 'Inter',sans-serif;
+}
 
 .textaligncenter{
     text-align: center;
@@ -26,4 +29,21 @@ body{
 
 .creditdiv{
     padding-bottom: 4rem;
+}
+
+.navbar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 1.3rem;
+    color: black;
+    background-color: #001529;
+}
+
+.navbar a{
+    color: white;
+}
+.navbar a:hover{
+    color: #da00d9;
 }

@@ -4,7 +4,8 @@ import Dapp from "./Dapp";
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
 import { store } from './store/store'
 import { Provider } from 'react-redux'
-import { HashRouter } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import AssetDetails from "./components/AssetDetails";
 
 const themes = {
   dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
@@ -18,13 +19,12 @@ const prevTheme = window.localStorage.getItem("theme");
 // react component. All of the logic is contained in it.
 
 ReactDOM.render(
+
   <Provider store={store}>
     <ThemeSwitcherProvider themeMap={themes} defaultTheme={prevTheme || "light"}>
-      <HashRouter>
-        <Dapp />
-      </HashRouter>
-
+      <Dapp/>
     </ThemeSwitcherProvider>
-  </Provider>,
+  </Provider>
+  ,
   document.getElementById("root")
 );
