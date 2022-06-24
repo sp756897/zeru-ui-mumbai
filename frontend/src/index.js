@@ -17,10 +17,12 @@ const prevTheme = window.localStorage.getItem("theme");
 // react component. All of the logic is contained in it.
 
 ReactDOM.render(
+
   <Provider store={store}>
     <ThemeSwitcherProvider themeMap={themes} defaultTheme={prevTheme || "light"}>
-      <Dapp />
+      <Dapp/>
     </ThemeSwitcherProvider>
-  </Provider>,
+  </Provider>
+  ,
   document.getElementById("root")
 );

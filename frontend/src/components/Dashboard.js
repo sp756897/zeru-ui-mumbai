@@ -6,15 +6,18 @@ import SuppliedAssetTable from './SuppliedAssetTable'
 import SupplyAssetTable from './SupplyAssetTable'
 import { Progress } from 'antd';
 
+
+
 const suppliedtable = { c1: 'Assets', c2: 'Balance', c3: 'APY', c4: 'Collateral' }
 const supplytable = { c1: 'Assets', c2: 'Wallet Balance', c3: 'APY', c4: 'Can be collateral' }
 const borrowedtable = { c1: 'Assets', c2: 'Debt', c3: 'APY', c4: 'APY type' }
 const borrowtable = { c1: 'Assets', c2: 'Available', c3: 'APY,Variable', c4: 'APY,Stable' }
 
 export default function Dashboard() {
+    
     return (
         <div className='dashboard' id='dashboard'>
-            <Row className='dashboard-details' style={{ height: '10rem',display:'flex',alignItems:'center',justifyContent:'space-around' }}>
+            <Row className='dashboard-details' style={{ height: '10rem', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
                 {/* <Col span={4}>
                     Credit Accumulated
                     <p>$30</p>
@@ -40,11 +43,12 @@ export default function Dashboard() {
                     <p>1.34</p>
                 </Col> */}
             </Row>
-            <Row style={{padding:'0 200px 40px 200px'}}>
+
+            <Row style={{ padding: '0 200px 40px 200px' }}>
                 Borrow Limit
                 <Progress type='line' percent={10} />
             </Row>
-            <Row gutter={[32, 24]} style={{ padding: '0 60px 40px 60px',fontFamily:'Inter' }}>
+            <Row gutter={[32, 24]} style={{ padding: '0 60px 40px 60px', fontFamily: 'Inter' }}>
                 <Col span={12}>
                     <h2>Supplied Assets</h2>
                     <SuppliedAssetTable titles={suppliedtable} />

@@ -1,6 +1,9 @@
 import React from 'react'
 import { Button, Space, Table } from 'antd';
 import { Switch } from 'antd';
+import { Link } from 'react-router-dom';
+import WithdrawModal from './WithdrawModal';
+import SupplyModal from './SupplyModal';
 
 export default function SuppliedAssetTable(props) {
     const columns = [
@@ -8,27 +11,27 @@ export default function SuppliedAssetTable(props) {
             title: props.titles.c1,
             dataIndex: 'asset',
             key: 'asset',
-            render: (text) => <a>{text}</a>,
-            align:'center'
+            render: (text) => <Link to="/details" state={{ asset: text }}>{text}</Link>,
+            align: 'center'
         },
         {
             title: props.titles.c2,
             dataIndex: 'balance',
             key: 'balance',
-            align:'center'
+            align: 'center'
         },
         {
             title: props.titles.c3,
             dataIndex: 'apy',
             key: 'apy',
-            align:'center'
+            align: 'center'
         },
         {
             title: props.titles.c4,
             key: 'collateral',
             dataIndex: 'collateral',
-            align:'center',
-            render:(_,record)=>(
+            align: 'center',
+            render: (_, record) => (
                 <Switch defaultChecked />
             ),
         },
@@ -37,11 +40,11 @@ export default function SuppliedAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button type='primary'><a>Withdraw</a></Button>
-                    <Button><a>Supply</a></Button>
+                    <WithdrawModal/>
+                    <SupplyModal a="default"/>
                 </Space>
             ),
-            align:'center'
+            align: 'center'
         },
     ];
     const data = [
@@ -69,7 +72,7 @@ export default function SuppliedAssetTable(props) {
     ];
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={false}/>
+            <Table columns={columns} dataSource={data} pagination={false} />
         </div>
     )
 }

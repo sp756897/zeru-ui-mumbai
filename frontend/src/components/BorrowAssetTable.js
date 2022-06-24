@@ -1,5 +1,7 @@
 import React from 'react'
 import { Button, Space, Table } from 'antd';
+import { Link } from 'react-router-dom';
+import BorrowModal from './BorrowModal';
 
 export default function BorrowAssetTable(props) {
     const columns = [
@@ -7,7 +9,7 @@ export default function BorrowAssetTable(props) {
             title: props.titles.c1,
             dataIndex: 'asset',
             key: 'asset',
-            render: (text) => <a>{text}</a>,
+            render: (text) => <Link to="/details" state={{asset:text}}>{text}</Link>,
             align:'center'
         },
         {
@@ -33,8 +35,8 @@ export default function BorrowAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Button type='primary'><a>Borrow</a></Button>
-                    <Button><a>details</a></Button>
+                    <BorrowModal a="primary"/>
+                    <Button><Link to="/details" state={{asset:"ETH"}}>details</Link></Button>
                 </Space>
             ),
             align:'center'
