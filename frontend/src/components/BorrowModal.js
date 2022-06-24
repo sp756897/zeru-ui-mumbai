@@ -2,7 +2,7 @@ import { Button, Card, Col, Input, Modal, Row, Switch } from 'antd';
 import { useState } from 'react';
 import React from 'react';
 
-export default function WithdrawModal() {
+export default function BorrowModal(props) {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
 
@@ -26,26 +26,17 @@ export default function WithdrawModal() {
 
     return (
         <div>
-            <Button type="primary" onClick={showModal}>
-                Withdraw
+            <Button type={props.a} onClick={showModal}>
+                Borrow
             </Button>
             <Modal
                 visible={visible}
-                title="Withdraw ETH"
+                title="Borrow ETH"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={[
                     <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-                        Approve to continue
-                    </Button>,
-                    <Button
-                        key="link"
-                        // href="https://google.com"
-                        type="primary"
-                        loading={loading}
-                        onClick={handleOk}
-                    >
-                        Withdraw ETH
+                        Borrow ETH
                     </Button>,
                 ]}
             >
@@ -61,26 +52,10 @@ export default function WithdrawModal() {
                 <Card >
                     <Row className='padding'>
                         <Col className='col-left'>
-                            <Switch />
-                        </Col>
-                        <Col className='col-right'>
-                            Unwrap WETH(to Withdraw ETH)
-                        </Col>
-                    </Row>
-                    <Row className='padding'>
-                        <Col className='col-left'>
-                            Remaining supply
-                        </Col>
-                        <Col className='col-right'>
-                            0.005 ETH
-                        </Col>
-                    </Row>
-                    <Row className='padding'>
-                        <Col className='col-left'>
                             Health Factor
                         </Col>
                         <Col className='col-right'>
-                            47.98→46.34
+                            44.98→46.34
                         </Col>
                     </Row>
 

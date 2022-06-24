@@ -1,7 +1,8 @@
-import { Row, Col, Card } from 'antd'
+import { Row, Col, Card, Button } from 'antd'
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import '../styles/AssetDetails.css'
+import { Link } from 'react-router-dom'
 
 export default function AssetDetails() {
   const location = useLocation()
@@ -10,6 +11,7 @@ export default function AssetDetails() {
   return (
     <div className='assetdetails'>
       You clicked {asset}
+      <Button ><Link to="/" >Go Back</Link></Button>
       <Row className='overallview' style={{display:'flex',alignItems:'center',justifyContent:'space-evenly'}}>
         <Col span={4}>
           {asset}<br/>

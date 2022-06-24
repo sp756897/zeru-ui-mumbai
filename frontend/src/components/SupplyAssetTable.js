@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Space, Table } from 'antd';
 import { Link } from 'react-router-dom';
+import SupplyModal from './SupplyModal';
 
 export default function SupplyAssetTable(props) {
   const columns = [
@@ -34,8 +35,8 @@ export default function SupplyAssetTable(props) {
         key: 'action',
         render: (_, record) => (
             <Space size="middle" >
-                <Button type='primary'><a>Supply</a></Button>
-                <Button><a>details</a></Button>
+                <SupplyModal a="primary"/>
+                <Button><Link to="/details" state={{asset:"ETH"}}>details</Link></Button>
             </Space>
         ),
         align:'center'

@@ -3,6 +3,7 @@ import { Button, Space, Table } from 'antd';
 import { Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import WithdrawModal from './WithdrawModal';
+import SupplyModal from './SupplyModal';
 
 export default function SuppliedAssetTable(props) {
     const columns = [
@@ -40,7 +41,7 @@ export default function SuppliedAssetTable(props) {
             render: (_, record) => (
                 <Space size="middle">
                     <WithdrawModal/>
-                    <Button><a>Supply</a></Button>
+                    <SupplyModal a="default"/>
                 </Space>
             ),
             align: 'center'

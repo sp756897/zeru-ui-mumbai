@@ -2,7 +2,7 @@ import { Button, Card, Col, Input, Modal, Row, Switch } from 'antd';
 import { useState } from 'react';
 import React from 'react';
 
-export default function WithdrawModal() {
+export default function RepayModal() {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
 
@@ -27,11 +27,11 @@ export default function WithdrawModal() {
     return (
         <div>
             <Button type="primary" onClick={showModal}>
-                Withdraw
+                Repay
             </Button>
             <Modal
                 visible={visible}
-                title="Withdraw ETH"
+                title="Repay ETH"
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={[
@@ -45,13 +45,13 @@ export default function WithdrawModal() {
                         loading={loading}
                         onClick={handleOk}
                     >
-                        Withdraw ETH
+                        Repay ETH
                     </Button>,
                 ]}
             >
                 Amount
                 <Row>
-                    <Col className='col-left' style={{width:'400px'}}><Input placeholder='0.00' /></Col>
+                    <Col className='col-left' style={{ width: '400px' }}><Input placeholder='0.00' /></Col>
                     <Col className='col-right'><h3>ETH</h3></Col>
                     MAX : 23.234 ETH
                 </Row>
@@ -61,18 +61,10 @@ export default function WithdrawModal() {
                 <Card >
                     <Row className='padding'>
                         <Col className='col-left'>
-                            <Switch />
+                            Remaining Debt
                         </Col>
                         <Col className='col-right'>
-                            Unwrap WETH(to Withdraw ETH)
-                        </Col>
-                    </Row>
-                    <Row className='padding'>
-                        <Col className='col-left'>
-                            Remaining supply
-                        </Col>
-                        <Col className='col-right'>
-                            0.005 ETH
+                            7.98 ETH → 6.34 ETH
                         </Col>
                     </Row>
                     <Row className='padding'>

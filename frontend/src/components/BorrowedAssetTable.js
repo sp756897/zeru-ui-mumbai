@@ -1,6 +1,8 @@
 import React from 'react'
 import { Button, Space, Table } from 'antd';
 import { Link } from 'react-router-dom';
+import RepayModal from './RepayModal';
+import BorrowModal from './BorrowModal';
 
 export default function BorrowedAssetTable(props) {
   const columns = [
@@ -34,8 +36,8 @@ export default function BorrowedAssetTable(props) {
         key: 'action',
         render: (_, record) => (
             <Space size="middle">
-                <Button type='primary'><a>Repay</a></Button>
-                <Button><a>Borrow</a></Button>
+                <RepayModal/>
+                <BorrowModal a="default"/>
             </Space>
         ),
         align:'center'
