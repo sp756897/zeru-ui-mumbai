@@ -4,8 +4,6 @@ import Dapp from "./Dapp";
 import { ThemeSwitcherProvider } from "react-css-theme-switcher";
 import { store } from './store/store'
 import { Provider } from 'react-redux'
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import AssetDetails from "./components/AssetDetails";
 
 
 const themes = {

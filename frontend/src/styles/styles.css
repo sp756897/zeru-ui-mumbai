@@ -47,3 +47,14 @@ body{
 .navbar a:hover{
     color: #da00d9;
 }
+
+.col-left{
+    margin-right: auto;
+}
+.col-right{
+    margin-left: auto;
+}
+
+.padding{
+    padding: 10px;
+}

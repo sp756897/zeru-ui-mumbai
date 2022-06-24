@@ -5,7 +5,6 @@ import BorrowedAssetTable from './BorrowedAssetTable'
 import SuppliedAssetTable from './SuppliedAssetTable'
 import SupplyAssetTable from './SupplyAssetTable'
 import { Progress } from 'antd';
-import Modala from './Modala'
 
 
 

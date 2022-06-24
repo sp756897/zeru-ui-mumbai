@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Space, Table } from 'antd';
 import { Switch } from 'antd';
 import { Link } from 'react-router-dom';
-import Modala from './Modala';
+import WithdrawModal from './WithdrawModal';
 
 export default function SuppliedAssetTable(props) {
     const columns = [
@@ -39,7 +39,7 @@ export default function SuppliedAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <Modala/>
+                    <WithdrawModal/>
                     <Button><a>Supply</a></Button>
                 </Space>
             ),
