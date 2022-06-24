@@ -4,7 +4,8 @@ import Account from "./components/Account"
 import ThemeSwitcher from "./components/ThemeSwitch";
 import Address from "./components/Address";
 import { useSelector, useDispatch } from "react-redux"
-import { setAddress } from "./store/slices/accountSlice";
+import { setAddress, setUserSummary, setUserBalances } from "./store/slices/accountSlice";
+import { setReserve } from "./store/slices/reserveSlice";
 
 import logo from './images/logo.png'
 import name from './images/name.png'
@@ -15,6 +16,13 @@ import Staking from "./components/Staking";
 import Credit from "./components/Credit";
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
+
+import deployed_contracts_address from "./deployed-contracts.json"
+import UiPoolDataProvider_abi from "./artifacts/contracts/misc/UiPoolDataProviderV2.sol/UiPoolDataProviderV2.json"
+import walletBalanceProvider_abi from "./artifacts/contracts/misc/WalletBalanceProvider.sol/WalletBalanceProvider.json";
+import { UiPoolDataProvider, WalletBalanceProvider } from "@aave/contract-helpers"
+import { formatReserves, formatUserSummary } from '@aave/math-utils';
+import dayjs from 'dayjs';
 
 const { TabPane } = Tabs;
 const { Header, Footer, Content } = Layout;
@@ -27,8 +35,178 @@ export default function Dapp() {
 
     const dispatch = useDispatch();
     const address = useSelector((state) => state.account.address);
+    const userSummary = useSelector((state) => state.account.userSummary);
+    const userWalletBalancesDictionary = useSelector((state) => state.account.userWalletBalancesDictionary);
+    const reserveData = useSelector((state) => state.reserve.reserveData);
 
     const [injectedProvider, setInjectedProvider] = useState()
+
+    const ammSymbolMap = {
+        '0xae461ca67b15dc8dc81ce7615e0320da1a9ab8d5': 'UNIDAIUSDC',
+        '0x004375dff511095cc5a197a54140a24efef3a416': 'UNIWBTCUSDC',
+        '0xa478c2975ab1ea89e8196811f51a7b7ade33eb11': 'UNIDAIWETH',
+        '0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc': 'UNIUSDCWETH',
+        '0xdfc14d2af169b0d36c4eff567ada9b2e0cae044f': 'UNIAAVEWETH',
+        '0xb6909b960dbbe7392d405429eb2b3649752b4838': 'UNIBATWETH',
+        '0x3da1313ae46132a397d90d95b1424a9a7e3e0fce': 'UNICRVWETH',
+        '0xa2107fa5b38d9bbd2c461d6edf11b11a50f6b974': 'UNILINKWETH',
+        '0xc2adda861f89bbb333c90c492cb837741916a225': 'UNIMKRWETH',
+        '0x8bd1661da98ebdd3bd080f0be4e6d9be8ce9858c': 'UNIRENWETH',
+        '0x43ae24960e5534731fc831386c07755a2dc33d47': 'UNISNXWETH',
+        '0xd3d2e2692501a5c9ca623199d38826e513033a17': 'UNIUNIWETH',
+        '0xbb2b8038a1640196fbe3e38816f3e67cba72d940': 'UNIWBTCWETH',
+        '0x2fdbadf3c4d5a8666bc06645b8358ab803996e28': 'UNIYFIWETH',
+        '0x1eff8af5d577060ba4ac8a29a13525bb0ee2a3d5': 'BPTWBTCWETH',
+        '0x59a19d8c652fa0284f44113d0ff9aba70bd46fb4': 'BPTBALWETH',
+    };
+
+    const zip = (a, b) => {
+        const listOfuserWalletBalances = {}
+        a.map((adata, key) => {
+            listOfuserWalletBalances[adata] = parseInt(b[key])
+        })
+        return listOfuserWalletBalances
+    }
+
+    const getReservesHumanized = (reservesRaw, poolBaseCurrencyRaw, chainId, lendingPoolAddressProvider) => {
+
+        const reservesData = reservesRaw.map(
+            reserveRaw => ({
+                id: `${chainId}-${reserveRaw.underlyingAsset}-${lendingPoolAddressProvider}`.toLowerCase(),
+                underlyingAsset: reserveRaw.underlyingAsset.toLowerCase(),
+                name: reserveRaw.symbol,
+                symbol: ammSymbolMap[reserveRaw.underlyingAsset.toLowerCase()]
+                    ? ammSymbolMap[reserveRaw.underlyingAsset.toLowerCase()]
+                    : reserveRaw.symbol,
+                decimals: reserveRaw.decimals.toNumber(),
+                baseLTVasCollateral: reserveRaw.baseLTVasCollateral.toString(),
+                reserveLiquidationThreshold:
+                    reserveRaw.reserveLiquidationThreshold.toString(),
+                reserveLiquidationBonus: reserveRaw.reserveLiquidationBonus.toString(),
+                reserveFactor: reserveRaw.reserveFactor.toString(),
+                usageAsCollateralEnabled: reserveRaw.usageAsCollateralEnabled,
+                borrowingEnabled: reserveRaw.borrowingEnabled,
+                stableBorrowRateEnabled: reserveRaw.stableBorrowRateEnabled,
+                isActive: reserveRaw.isActive,
+                isFrozen: reserveRaw.isFrozen,
+                liquidityIndex: reserveRaw.liquidityIndex.toString(),
+                variableBorrowIndex: reserveRaw.variableBorrowIndex.toString(),
+                liquidityRate: reserveRaw.liquidityRate.toString(),
+                variableBorrowRate: reserveRaw.variableBorrowRate.toString(),
+                stableBorrowRate: reserveRaw.stableBorrowRate.toString(),
+                lastUpdateTimestamp: reserveRaw.lastUpdateTimestamp,
+                aTokenAddress: reserveRaw.aTokenAddress.toString(),
+                stableDebtTokenAddress: reserveRaw.stableDebtTokenAddress.toString(),
+                variableDebtTokenAddress:
+                    reserveRaw.variableDebtTokenAddress.toString(),
+                interestRateStrategyAddress:
+                    reserveRaw.interestRateStrategyAddress.toString(),
+                availableLiquidity: reserveRaw.availableLiquidity.toString(),
+                totalPrincipalStableDebt:
+                    reserveRaw.totalPrincipalStableDebt.toString(),
+                averageStableRate: reserveRaw.averageStableRate.toString(),
+                stableDebtLastUpdateTimestamp:
+                    reserveRaw.stableDebtLastUpdateTimestamp.toNumber(),
+                totalScaledVariableDebt: reserveRaw.totalScaledVariableDebt.toString(),
+                priceInMarketReferenceCurrency:
+                    reserveRaw.priceInMarketReferenceCurrency.toString(),
+                variableRateSlope1: reserveRaw.variableRateSlope1.toString(),
+                variableRateSlope2: reserveRaw.variableRateSlope2.toString(),
+                stableRateSlope1: reserveRaw.stableRateSlope1.toString(),
+                stableRateSlope2: reserveRaw.stableRateSlope2.toString(),
+                priceInMarketReferenceCurrency: 0,
+                eModeCategoryId: 0,
+                borrowCap: '',
+                supplyCap: '',
+                debtCeiling: '',
+                debtCeilingDecimals: 0,
+                isolationModeTotalDebt: '',
+                eModeLtv: 0,
+                eModeLiquidationThreshold: 0,
+                eModeLiquidationBonus: 0,
+
+            }),
+        );
+
+        const baseCurrencyData = {
+            // this is to get the decimals from the unit so 1e18 = string length of 19 - 1 to get the number of 0
+            marketReferenceCurrencyDecimals:
+                poolBaseCurrencyRaw.marketReferenceCurrencyUnit.toString().length - 1,
+            marketReferenceCurrencyPriceInUsd:
+                poolBaseCurrencyRaw.marketReferenceCurrencyPriceInUsd.toString(),
+            networkBaseTokenPriceInUsd:
+                poolBaseCurrencyRaw.networkBaseTokenPriceInUsd.toString(),
+            networkBaseTokenPriceDecimals:
+                poolBaseCurrencyRaw.networkBaseTokenPriceDecimals,
+        };
+
+        return {
+            reservesData,
+            baseCurrencyData,
+        };
+    }
+
+    const getPoolDatawithFormatHumanised = async (pro, addr, chainId) => {
+        const lendingPoolAddressProvider = deployed_contracts_address.LendingPoolAddressesProvider.coverage.address
+        const uipoolDataProvider_address = deployed_contracts_address.UiPoolDataProvider.coverage.address
+        const walletBalanceProviderAddress = deployed_contracts_address.WalletBalanceProvider.coverage.address
+
+        const reserve_data = new UiPoolDataProvider({
+            uiPoolDataProviderAddress: uipoolDataProvider_address,
+            provider: pro,
+            chainId: chainId
+        })
+
+        const UiPoolDataProvider_contract = new ethers.Contract(
+            deployed_contracts_address.UiPoolDataProvider.coverage.address,
+            UiPoolDataProvider_abi.abi,
+            pro
+        )
+
+        const test = await UiPoolDataProvider_contract.getReservesData(lendingPoolAddressProvider)
+        const reserve = test[0]
+        const base = test[1]
+
+        const { reservesData, baseCurrencyData } = getReservesHumanized(reserve, base, chainId, lendingPoolAddressProvider);
+        const { userReserves, userEmodeCategoryId } = await reserve_data.getUserReservesHumanized({
+            lendingPoolAddressProvider,
+            user: addr,
+        });
+
+        const currentTimestamp = dayjs().unix();
+        const formattedPoolReserves = formatReserves({
+            reserves: reservesData,
+            currentTimestamp: currentTimestamp,
+            marketReferenceCurrencyDecimals:
+                baseCurrencyData.marketReferenceCurrencyDecimals,
+            marketReferencePriceInUsd: baseCurrencyData.marketReferenceCurrencyPriceInUsd,
+        });
+
+        dispatch(setReserve({ reserveData: formattedPoolReserves }))
+
+        const userSummarytemp = formatUserSummary({
+            currentTimestamp,
+            marketReferencePriceInUsd: baseCurrencyData.marketReferenceCurrencyPriceInUsd,
+            marketReferenceCurrencyDecimals:
+                baseCurrencyData.marketReferenceCurrencyDecimals,
+            userReserves: userReserves,
+            formattedReserves: formattedPoolReserves,
+            userEmodeCategoryId: userEmodeCategoryId,
+        });
+        dispatch(setUserSummary({ userSummary: userSummarytemp }))
+
+        const userWalletProviderContract = new ethers.Contract(
+            walletBalanceProviderAddress,
+            walletBalanceProvider_abi.abi,
+            pro
+        )
+        const userWalletBalances = await userWalletProviderContract.getUserWalletBalances(lendingPoolAddressProvider, addr)
+        const userWalletBalancesReserves = userWalletBalances[0]
+        const userWalletBalancesBalance = userWalletBalances[1]
+        const userWalletBalancesZipped = zip(userWalletBalancesReserves, userWalletBalancesBalance)
+        dispatch(setUserBalances({ userWalletBalancesDictionary: userWalletBalancesZipped }))
+
+    }
 
     const logoutOfWeb3Modal = async () => {
         await web3Modal.clearCachedProvider();
@@ -41,31 +219,62 @@ export default function Dapp() {
     };
 
     const loadWeb3Modal = useCallback(async () => {
-        const provider = await web3Modal.connect();
-        const pro = new ethers.providers.Web3Provider(provider);
-        await pro.send("eth_requestAccounts", []);
-        const signer = pro.getSigner();
-        let addr = await signer.getAddress()
-        console.log(addr)
+        let provider = null
+        let addr = null
+        let pro = null
+        let chainId = null
+        let signer_temp = null
+        let chainData = null
 
-        setInjectedProvider(pro)
-        dispatch(setAddress({ address: addr }))
+        try {
+            provider = await web3Modal.connect();
+            pro = new ethers.providers.Web3Provider(provider);
+            await pro.send("eth_requestAccounts", []);
+            signer_temp = pro.getSigner();
+            addr = await signer_temp.getAddress()
+            chainData = await pro.getNetwork()
+            chainId = chainData.chainId
+            console.log(addr)
+        }
+        catch (err) {
+            console.log("Error in loadWeb3Modal web3Modal connect: ", err)
+        }
+
+        try {
+            setInjectedProvider(pro)
+            dispatch(setAddress({ address: addr }))
+        }
+        catch (err) {
+            console.log("Error in Dispatch and setInjectedProvider: ", err)
+        }
+
+        try {
+            await getPoolDatawithFormatHumanised(pro, addr, chainId)
+        }
+        catch (err) {
+            console.log("Error in loadWeb3Modal getPoolDatawithFormatHumanised: ", err)
+        }
 
         provider.on("chainChanged", chainId => {
             console.log(`chain changed to ${chainId}! updating providers`);
-            const pro = new ethers.providers.Web3Provider(provider);
+            pro = new ethers.providers.Web3Provider(provider);
             setInjectedProvider(pro)
+            getPoolDatawithFormatHumanised(pro, address, chainId)
+
         });
 
         provider.on("accountsChanged", async () => {
             console.log(`account changed!`);
-            const pro = new ethers.providers.Web3Provider(provider);
+            pro = new ethers.providers.Web3Provider(provider);
             await pro.send("eth_requestAccounts", []);
-            const signer = pro.getSigner();
-            let addr = await signer.getAddress()
+            const signer_temp = pro.getSigner();
+            let addr = await signer_temp.getAddress()
+            chainData = await pro.getNetwork()
+            chainId = chainData.chainId
             console.log(addr)
             setInjectedProvider(pro)
             dispatch(setAddress({ address: addr }))
+            getPoolDatawithFormatHumanised(pro, addr, chainId)
 
         });
 
@@ -92,7 +301,7 @@ export default function Dapp() {
                         <img src={name} width={100} />
                     </div>
                     <div>
-                        <Avatar icon={<UserOutlined />} style={{marginBottom:'0.7rem',marginRight:'0.6rem'}}/>
+                        <Avatar icon={<UserOutlined />} style={{ marginBottom: '0.7rem', marginRight: '0.6rem' }} />
                         {address ? <Address address={address} /> : ""}
                     </div>
                     <Account
@@ -115,7 +324,7 @@ export default function Dapp() {
                         </TabPane>
                     </Tabs>
                 </Content>
-                <Footer style={{background:'#191919',color:'white'}}>
+                <Footer style={{ background: '#191919', color: 'white' }}>
                     ⒸZERU
                 </Footer>
             </Layout>
