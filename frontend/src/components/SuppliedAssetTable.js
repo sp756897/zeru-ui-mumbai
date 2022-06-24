@@ -4,8 +4,13 @@ import { Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import WithdrawModal from './WithdrawModal';
 import SupplyModal from './SupplyModal';
+import { useSelector } from 'react-redux';
 
 export default function SuppliedAssetTable(props) {
+
+    const reserveData = useSelector((state) => state.reserve.reserveData);
+    const userSummary = useSelector((state) => state.account.userSummary);
+
     const columns = [
         {
             title: props.titles.c1,
@@ -40,39 +45,61 @@ export default function SuppliedAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <WithdrawModal/>
-                    <SupplyModal a="default"/>
+                    <WithdrawModal />
+                    <SupplyModal a="default" />
                 </Space>
             ),
             align: 'center'
         },
     ];
-    const data = [
-        {
-            key: '1',
-            asset: 'ETH',
-            balance: 0,
-            apy: '12%',
-            collateral: 'yes',
-        },
-        {
-            key: '2',
-            asset: 'ETH',
-            balance: 0,
-            apy: '46%',
-            collateral: 'yes',
-        },
-        {
-            key: '3',
-            asset: 'ETH',
-            balance: 0,
-            apy: '23%',
-            collateral: 'yes',
-        },
-    ];
+    // const data = [
+    //     {
+    //         key: '1',
+    //         asset: 'ETH',
+    //         balance: 0,
+    //         apy: '12%',
+    //         collateral: 'yes',
+    //     },
+    //     {
+    //         key: '2',
+    //         asset: 'ETH',
+    //         balance: 0,
+    //         apy: '46%',
+    //         collateral: 'yes',
+    //     },
+    //     {
+    //         key: '3',
+    //         asset: 'ETH',
+    //         balance: 0,
+    //         apy: '23%',
+    //         collateral: 'yes',
+    //     },
+    // ];
+
+    const supplyAssetTableList = []
+    const data = userSummary ? userSummary.userReservesData.map((data, key) => {
+        if (true) {
+            let isUsedAsCollateral = data.usageAsCollateralEnabledOnUser
+            let apyType = data.reserve.stableBorrowRateEnabled
+            let selectedAPYType = apyType ? data.stableBorrowAPY : data.reserve.variableBorrowAPY
+            let apyTypeString = apyType ? "Stable" : "Variable"
+            supplyAssetTableList.push(
+                {
+                    key: key,
+                    asset: data.reserve.name,
+                    balance: data.underlyingBalance,
+                    apy: data.reserve.supplyAPY,
+                    collateral: isUsedAsCollateral,
+                }
+            )
+            console.log(key, data.reserve.name, selectedAPYType, apyTypeString)
+
+        }
+    }) : ""
+
     return (
         <div>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table columns={columns} dataSource={supplyAssetTableList} pagination={false} />
         </div>
     )
 }

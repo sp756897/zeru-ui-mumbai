@@ -184,19 +184,8 @@ export default function Dapp() {
                 baseCurrencyData.marketReferenceCurrencyDecimals,
             marketReferencePriceInUsd: baseCurrencyData.marketReferenceCurrencyPriceInUsd,
         });
-
-        dispatch(setReserve({ reserveData: formattedPoolReserves }))
-
-        const userSummarytemp = formatUserSummary({
-            currentTimestamp,
-            marketReferencePriceInUsd: baseCurrencyData.marketReferenceCurrencyPriceInUsd,
-            marketReferenceCurrencyDecimals:
-                baseCurrencyData.marketReferenceCurrencyDecimals,
-            userReserves: userReserves,
-            formattedReserves: formattedPoolReserves,
-            userEmodeCategoryId: userEmodeCategoryId,
-        });
-        dispatch(setUserSummary({ userSummary: userSummarytemp }))
+        console.log("formattedPoolReserves:", formattedPoolReserves)
+        await dispatch(setReserve({ reserveData: formattedPoolReserves }))
 
         const userWalletProviderContract = new ethers.Contract(
             walletBalanceProviderAddress,
@@ -207,7 +196,21 @@ export default function Dapp() {
         const userWalletBalancesReserves = userWalletBalances[0]
         const userWalletBalancesBalance = userWalletBalances[1]
         const userWalletBalancesZipped = zip(userWalletBalancesReserves, userWalletBalancesBalance)
-        dispatch(setUserBalances({ userWalletBalancesDictionary: userWalletBalancesZipped }))
+        await dispatch(setUserBalances({ userWalletBalancesDictionary: userWalletBalancesZipped }))
+        // console.log("userWalletBalancesZipped:", userWalletBalancesZipped)
+
+
+        const userSummarytemp = formatUserSummary({
+            currentTimestamp,
+            marketReferencePriceInUsd: baseCurrencyData.marketReferenceCurrencyPriceInUsd,
+            marketReferenceCurrencyDecimals:
+                baseCurrencyData.marketReferenceCurrencyDecimals,
+            userReserves: userReserves,
+            formattedReserves: formattedPoolReserves,
+            userEmodeCategoryId: userEmodeCategoryId,
+        });
+        await dispatch(setUserSummary({ userSummary: userSummarytemp }))
+        console.log("userSummarytemp:", userSummarytemp)
 
     }
 
