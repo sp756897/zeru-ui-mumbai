@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import AssetDetails from "./components/AssetDetails";
 
+
 const themes = {
   dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
   light: `${process.env.PUBLIC_URL}/light-theme.css`,

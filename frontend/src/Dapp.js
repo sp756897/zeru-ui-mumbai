@@ -16,7 +16,8 @@ import Staking from "./components/Staking";
 import Credit from "./components/Credit";
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
-import { HashRouter as Router, NavLink, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, NavLink, Route, Routes } from "react-router-dom";
+import 'antd/dist/antd.css'; 
 
 const { TabPane } = Tabs;
 const { Header, Footer, Content } = Layout;
