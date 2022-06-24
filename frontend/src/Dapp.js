@@ -6,6 +6,7 @@ import Address from "./components/Address";
 import { useSelector, useDispatch } from "react-redux"
 import { setAddress, setUserSummary, setUserBalances } from "./store/slices/accountSlice";
 import { setReserve } from "./store/slices/reserveSlice";
+import AssetDetails from "./components/AssetDetails";
 
 import logo from './images/logo.png'
 import name from './images/name.png'
@@ -16,6 +17,8 @@ import Staking from "./components/Staking";
 import Credit from "./components/Credit";
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
+import { BrowserRouter as Router, NavLink, Route, Routes } from "react-router-dom";
+import 'antd/dist/antd.css';
 
 import deployed_contracts_address from "./deployed-contracts.json"
 import UiPoolDataProvider_abi from "./artifacts/contracts/misc/UiPoolDataProviderV2.sol/UiPoolDataProviderV2.json"
@@ -294,41 +297,50 @@ export default function Dapp() {
 
     return (
         <div className="Dapp">
-            <Layout>
-                <Header style={{ display: "flex", alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
-                    <div style={{ alignItems: 'flex-start' }}>
-                        <img src={logo} width={30} />
-                        <img src={name} width={100} />
-                    </div>
-                    <div>
-                        <Avatar icon={<UserOutlined />} style={{ marginBottom: '0.7rem', marginRight: '0.6rem' }} />
-                        {address ? <Address address={address} /> : ""}
-                    </div>
-                    <Account
-                        web3Modal={web3Modal}
-                        loadWeb3Modal={loadWeb3Modal}
-                        logoutOfWeb3Modal={logoutOfWeb3Modal}
-                    />
+            <Router>
+                <Layout>
+                    <Header style={{ display: "flex", alignItems: 'center', justifyContent: 'space-between', height: '64px' }}>
+                        <div style={{ alignItems: 'flex-start' }}>
+                            <img src={logo} width={30} />
+                            <img src={name} width={100} />
+                        </div>
+                        <div>
+                            <Avatar icon={<UserOutlined />} style={{ marginBottom: '0.7rem', marginRight: '0.6rem' }} />
+                            {address ? <Address address={address} /> : ""}
+                        </div>
+                        <Account
+                            web3Modal={web3Modal}
+                            loadWeb3Modal={loadWeb3Modal}
+                            logoutOfWeb3Modal={logoutOfWeb3Modal}
+                        />
 
-                </Header>
-                <Content>
-                    <Tabs defaultActiveKey="Dashboard" centered>
-                        <TabPane tab="Dashboard" key="Dashboard">
-                            <Dashboard />
-                        </TabPane>
-                        <TabPane tab="Staking" key="Staking">
-                            <Staking />
-                        </TabPane>
-                        <TabPane tab="Credit" key="Credit">
-                            <Credit />
-                        </TabPane>
-                    </Tabs>
-                </Content>
-                <Footer style={{ background: '#191919', color: 'white' }}>
-                    ⒸZERU
-                </Footer>
-            </Layout>
-            <ThemeSwitcher />
+                    </Header>
+                    <div className="navbar">
+                        <NavLink to="/">
+                            Dashboard
+                        </NavLink>
+                        <NavLink to="/staking">
+                            Staking
+                        </NavLink>
+                        <NavLink to="/credit">
+                            Credit
+                        </NavLink>
+                    </div>
+
+                    <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/details" element={<AssetDetails />} />
+                        <Route path="/staking" element={<Staking />} />
+                        <Route path="/credit" element={<Credit />} />
+                    </Routes>
+                    <Footer style={{ background: '#191919', color: 'white' }}>
+                        ⒸZERU
+                    </Footer>
+                </Layout>
+
+                <ThemeSwitcher />
+
+            </Router>
         </div>
     )
 }
