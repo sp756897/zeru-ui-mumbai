@@ -18,12 +18,12 @@ export default function Account({
   return (
     <div >
       {web3Modal && (
-        <Button
+        <a
           style={{ borderRadius:'0.35rem',fontSize:'1rem',fontWeight:'500',}}
           onClick={accountButtonInfo.action}
         >
           {accountButtonInfo.name}
-        </Button>
+        </a>
       )}
     </div>
   );

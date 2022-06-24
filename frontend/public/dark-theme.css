@@ -5079,6 +5079,9 @@ a.ant-btn-sm {
   display: block;
   height: auto;
 }
+.navbar{
+  background-color: transparent;
+}
 
 .ant-carousel .slick-arrow.slick-hidden {
   display: none;
