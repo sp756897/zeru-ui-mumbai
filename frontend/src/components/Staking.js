@@ -21,49 +21,52 @@ export default function Staking() {
                     <p className='value'>453.67</p>
                 </Col>
             </Row>
-            <Card style={{ maxWidth: '1000px', marginLeft: 'auto', marginRight: 'auto' }}>
-                <Title level={2}>Stake ZERU</Title>
-                <br />
-                <Row style={flexcss}>
-                    <Col span={6}>
-                        <Title level={5}>ZERU</Title>
-                    </Col>
-                    <Col span={6}>
-                        Staking APY
-                        <Title level={5}>8.20%</Title>
+            <div className='staking-card'>
+                <Card  style={{ maxWidth: '1000px', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <Title level={2}>Stake ZERU</Title>
+                    <br />
+                    <Row style={flexcss}>
+                        <Col span={6}>
+                            <Title level={5}>ZERU</Title>
+                        </Col>
+                        <Col span={6}>
+                            Staking APY
+                            <Title level={5}>8.20%</Title>
 
-                    </Col>
-                    <Col span={6}>
-                        Max Slashing
-                        <Title level={5}>30.00%</Title>
+                        </Col>
+                        <Col span={6}>
+                            Max Slashing
+                            <Title level={5}>30.00%</Title>
 
-                    </Col>
-                    <Col span={6}>
-                        <Button type="primary">
-                            Stake
-                        </Button>
-                    </Col>
-                </Row>
-                <Row style={flexcss}>
-                    <Col span={12}>
-                        <Card style={{ height:'200px' }}>
-                            <h2 level={3}>Staked ZERU</h2>
-                            <Title level={2}>10</Title>
-                            
-                        </Card>
-
-                    </Col>
-                    <Col span={12} >
-                    <Card style={{ height:'200px' }}>
-                            <h2>Claimable ZERU</h2>
-                            <Title level={2}>2</Title>
-                            <Button type='primary'>
-                                Claim ZERU
+                        </Col>
+                        <Col span={6}>
+                            <Button type="primary">
+                                Stake
                             </Button>
-                        </Card>
-                    </Col>
-                </Row>
-            </Card>
+                        </Col>
+                    </Row>
+                    <Row style={flexcss}>
+                        <Col span={12}>
+                            <Card style={{ height: '200px' }}>
+                                <h2 level={3}>Staked ZERU</h2>
+                                <Title level={2}>10</Title>
+
+                            </Card>
+
+                        </Col>
+                        <Col span={12} >
+                            <Card style={{ height: '200px' }}>
+                                <h2>Claimable ZERU</h2>
+                                <Title level={2}>2</Title>
+                                <Button type='primary'>
+                                    Claim ZERU
+                                </Button>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Card>
+            </div>
+
         </div>
     )
 }

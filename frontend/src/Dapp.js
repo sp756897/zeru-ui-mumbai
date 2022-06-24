@@ -10,7 +10,7 @@ import AssetDetails from "./components/AssetDetails";
 
 import logo from './images/logo.png'
 import name from './images/name.png'
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import { Tabs } from 'antd';
 import Dashboard from "./components/Dashboard";
 import Staking from "./components/Staking";
@@ -19,6 +19,10 @@ import { UserOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import { BrowserRouter as Router, NavLink, Route, Routes } from "react-router-dom";
 import 'antd/dist/antd.css';
+import { shortenAddress } from "./helpers/ShortenAddress";
+import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Space } from 'antd';
+import { message } from 'antd';
 
 import deployed_contracts_address from "./deployed-contracts.json"
 import UiPoolDataProvider_abi from "./artifacts/contracts/misc/UiPoolDataProviderV2.sol/UiPoolDataProviderV2.json"
@@ -33,6 +37,12 @@ const { Header, Footer, Content } = Layout;
 const { ethers } = require("ethers");
 
 const web3Modal = Web3ModalSetup();
+
+const copysuccess = () => {
+    message.success('Address Copied');
+  };
+
+
 
 export default function Dapp() {
 
@@ -298,6 +308,45 @@ export default function Dapp() {
         }
     }, [loadWeb3Modal]);
 
+    let wrapperFunction = () => {
+        //do something
+        navigator.clipboard.writeText(address);
+        //do something
+        copysuccess();
+    }
+
+    const menu = (
+        <Menu
+            items={[
+                {
+                    label: <code>Network:Kovan</code>,
+                    key: '0',
+                },
+                {
+                    type: 'divider',
+                },
+                {
+                    label: <a onClick={wrapperFunction}>Copy Address</a>,
+                    key: '1',
+                },
+                {
+                    label: 'View on Explorer',
+                    key: '2',
+                },
+                {
+                    label: <Account
+                        web3Modal={web3Modal}
+                        loadWeb3Modal={loadWeb3Modal}
+                        logoutOfWeb3Modal={logoutOfWeb3Modal}
+                    />,
+                    key: '3'
+                }
+            ]}
+        />
+    );
+
+    let accountButtonInfo = { name: 'Connect', action: loadWeb3Modal };
+
     return (
         <div className="Dapp">
             <Router>
@@ -307,18 +356,7 @@ export default function Dapp() {
                             <img src={logo} width={30} />
                             <img src={name} width={100} />
                         </div>
-                        <div>
-                            <Avatar icon={<UserOutlined />} style={{ marginBottom: '0.7rem', marginRight: '0.6rem' }} />
-                            {address ? <Address address={address} /> : ""}
-                        </div>
-                        <Account
-                            web3Modal={web3Modal}
-                            loadWeb3Modal={loadWeb3Modal}
-                            logoutOfWeb3Modal={logoutOfWeb3Modal}
-                        />
-
-                    </Header>
-                    <div className="navbar">
+                        <div className="navbar">
                         <NavLink to="/">
                             Dashboard
                         </NavLink>
@@ -329,7 +367,22 @@ export default function Dapp() {
                             Credit
                         </NavLink>
                     </div>
+                        <div>
+                            {web3Modal?.cachedProvider ? <Dropdown overlay={menu} trigger={['click']}>
+                                <a onClick={(e) => e.preventDefault()}>
+                                    <Space>
+                                        <Avatar icon={<UserOutlined />} style={{ marginBottom: '0.7rem', marginRight: '0.6rem' }} />
+                                        {address ? <code> <Address address={shortenAddress(address)} /></code> : "Connect Wallet"}
+                                        <DownOutlined />
+                                    </Space>
+                                </a>
+                            </Dropdown>:<Button type="primary" onClick={accountButtonInfo.action}>Connect</Button>}
+                            
+                        </div>
 
+
+                    </Header>
+                
                     <Routes>
                         <Route path="/" element={<Dashboard />} />
                         <Route path="/details" element={<AssetDetails />} />

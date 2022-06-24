@@ -15,8 +15,8 @@ export default function Address({ address }) {
 
   return (
     <span>
-      <span style={{ fontSize: 28, color: "white" }}>
-        <Text copyable={{ text: address }} style={{ color: "white" }}>
+      <span style={{ fontSize: 16, color: "white" }}>
+        <Text style={{ color: "white" }}>
           {address}
         </Text>
       </span>
