@@ -36,8 +36,8 @@ export default function SuppliedAssetTable(props) {
             key: 'collateral',
             dataIndex: 'collateral',
             align: 'center',
-            render: (_, record) => (
-                <Switch defaultChecked />
+            render: (text, record) => (
+                <Switch checked={record.collateral}/>
             ),
         },
         {
@@ -45,8 +45,8 @@ export default function SuppliedAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <WithdrawModal />
-                    <SupplyModal a="default" />
+                    <WithdrawModal rowData={record}/>
+                    <SupplyModal a="default" rowData={record}/>
                 </Space>
             ),
             align: 'center'
@@ -79,7 +79,8 @@ export default function SuppliedAssetTable(props) {
     const supplyAssetTableList = []
     const data = userSummary ? userSummary.userReservesData.map((data, key) => {
         if (true) {
-            let isUsedAsCollateral = data.usageAsCollateralEnabledOnUser
+            // let isUsedAsCollateral = data.usageAsCollateralEnabledOnUser
+            let isUsedAsCollateral = data.reserve.usageAsCollateralEnabled
             let apyType = data.reserve.stableBorrowRateEnabled
             let selectedAPYType = apyType ? data.stableBorrowAPY : data.reserve.variableBorrowAPY
             let apyTypeString = apyType ? "Stable" : "Variable"
@@ -93,8 +94,11 @@ export default function SuppliedAssetTable(props) {
                 }
             )
             console.log(key, data.reserve.name, selectedAPYType, apyTypeString)
+            
 
         }
+        console.log("starts here")
+        console.log(data.reserve.usageAsCollateralEnabled)
     }) : ""
 
     return (

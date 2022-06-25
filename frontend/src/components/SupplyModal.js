@@ -6,6 +6,10 @@ export default function SupplyModal(props) {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
 
+    let supply = "Supply ";
+    let asset = props.rowData.asset;
+    let supplyAsset = supply.concat(asset);
+
 
     const showModal = () => {
         setVisible(true);
@@ -31,12 +35,12 @@ export default function SupplyModal(props) {
             </Button>
             <Modal
                 visible={visible}
-                title="Supply ETH"
+                title={supplyAsset}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={[
                     <Button key="submit" type="primary" loading={loading} onClick={handleOk}>
-                        Supply ETH
+                        {supplyAsset}
                     </Button>,
                 ]}
             >
@@ -44,7 +48,7 @@ export default function SupplyModal(props) {
                 <Row>
                     <Col className='col-left' style={{width:'400px'}}><Input placeholder='0.00' /></Col>
                     <Col className='col-right'><h3>ETH</h3></Col>
-                    MAX : 23.234 ETH
+                    MAX : 23.234 {asset}
                 </Row>
 
 

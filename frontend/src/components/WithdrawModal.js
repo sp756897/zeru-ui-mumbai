@@ -2,10 +2,13 @@ import { Button, Card, Col, Input, Modal, Row, Switch } from 'antd';
 import { useState } from 'react';
 import React from 'react';
 
-export default function WithdrawModal() {
+export default function WithdrawModal(props) {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
 
+    let withdraw = "Withdraw ";
+    let asset = props.rowData.asset;
+    let withdrawAsset = withdraw.concat(asset);
 
     const showModal = () => {
         setVisible(true);
@@ -31,7 +34,7 @@ export default function WithdrawModal() {
             </Button>
             <Modal
                 visible={visible}
-                title="Withdraw ETH"
+                title={withdrawAsset}
                 onOk={handleOk}
                 onCancel={handleCancel}
                 footer={[
@@ -45,34 +48,34 @@ export default function WithdrawModal() {
                         loading={loading}
                         onClick={handleOk}
                     >
-                        Withdraw ETH
+                        {withdrawAsset}
                     </Button>,
                 ]}
             >
                 Amount
                 <Row>
-                    <Col className='col-left' style={{width:'400px'}}><Input placeholder='0.00' /></Col>
-                    <Col className='col-right'><h3>ETH</h3></Col>
-                    MAX : 23.234 ETH
+                    <Col className='col-left' style={{ width: '400px' }}><Input placeholder='0.00' /></Col>
+                    <Col className='col-right'><h3>{asset}</h3></Col>
+                    MAX : 23.234 {asset}
                 </Row>
 
 
                 Transaction Overview
                 <Card >
-                    <Row className='padding'>
+                    {/* <Row className='padding'>
                         <Col className='col-left'>
                             <Switch />
                         </Col>
                         <Col className='col-right'>
                             Unwrap WETH(to Withdraw ETH)
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row className='padding'>
                         <Col className='col-left'>
                             Remaining supply
                         </Col>
                         <Col className='col-right'>
-                            0.005 ETH
+                            0.005 {asset}
                         </Col>
                     </Row>
                     <Row className='padding'>
