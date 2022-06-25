@@ -7,7 +7,8 @@ export default function SupplyModal(props) {
     const [visible, setVisible] = useState(false);
 
     let supply = "Supply ";
-    let asset = props.rowData.asset;
+     let asset = props.a.asset;
+    // let asset = "ETH"
     let supplyAsset = supply.concat(asset);
 
 
@@ -30,7 +31,7 @@ export default function SupplyModal(props) {
 
     return (
         <div>
-            <Button type={props.a} onClick={showModal}>
+            <Button type="default" onClick={showModal}>
                 Supply
             </Button>
             <Modal
@@ -47,7 +48,7 @@ export default function SupplyModal(props) {
                 Amount
                 <Row>
                     <Col className='col-left' style={{width:'400px'}}><Input placeholder='0.00' /></Col>
-                    <Col className='col-right'><h3>ETH</h3></Col>
+                    <Col className='col-right'><h3>{asset}</h3></Col>
                     MAX : 23.234 {asset}
                 </Row>
 

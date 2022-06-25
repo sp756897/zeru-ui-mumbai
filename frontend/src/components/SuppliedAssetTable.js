@@ -46,7 +46,7 @@ export default function SuppliedAssetTable(props) {
             render: (_, record) => (
                 <Space size="middle">
                     <WithdrawModal rowData={record}/>
-                    <SupplyModal a="default" rowData={record}/>
+                    <SupplyModal a={record}/>
                 </Space>
             ),
             align: 'center'
