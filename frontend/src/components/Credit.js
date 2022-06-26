@@ -9,18 +9,18 @@ const { Title } = Typography;
 export default function Credit() {
   return (
     <div className='creditdiv'>
-        <Row>
+        <Row className='credit-overview'>
             <Col span={12} style={{marginLeft:'auto',marginRight:'auto',textAlign:'center'}}>
             Available Credit:<br/>
-            <Title level={1}>
+            <h1 >
                 10,000.00
-            </Title>
+            </h1>
             </Col>
 
         </Row>
-        <Row>
+        <Row className='credit-table-row'>
             <Col span={12} style={{marginLeft:'auto',marginRight:'auto'}}>
-            Your Credits
+            <h2 style={{color:'white'}}>Your Credits</h2>
             <CreditAssetTable/>
             </Col>
             
