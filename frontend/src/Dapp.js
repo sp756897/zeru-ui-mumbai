@@ -64,9 +64,9 @@ export default function Dapp() {
     };
 
     const zip = (a, b) => {
-        const listOfuserWalletBalances = {}
+        var listOfuserWalletBalances = {}
         a.map((adata, key) => {
-            listOfuserWalletBalances[adata] = parseInt(b[key])
+            listOfuserWalletBalances[adata.toLowerCase()] = parseInt(b[key])
         })
         return listOfuserWalletBalances
     }
@@ -197,7 +197,7 @@ export default function Dapp() {
         const userWalletBalancesBalance = userWalletBalances[1]
         const userWalletBalancesZipped = zip(userWalletBalancesReserves, userWalletBalancesBalance)
         await dispatch(setUserBalances({ userWalletBalancesDictionary: userWalletBalancesZipped }))
-        // console.log("userWalletBalancesZipped:", userWalletBalancesZipped)
+        console.log("userWalletBalancesZipped:", userWalletBalancesZipped)
 
 
         const userSummarytemp = formatUserSummary({
@@ -331,7 +331,7 @@ export default function Dapp() {
                     </div>
 
                     <Routes>
-                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/" element={<Dashboard provider={injectedProvider} />} />
                         <Route path="/details" element={<AssetDetails />} />
                         <Route path="/staking" element={<Staking />} />
                         <Route path="/credit" element={<Credit />} />

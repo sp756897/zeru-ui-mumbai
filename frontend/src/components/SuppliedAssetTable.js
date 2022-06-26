@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Space, Table } from 'antd';
+import { Space, Table } from 'antd';
 import { Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import WithdrawModal from './WithdrawModal';
@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 export default function SuppliedAssetTable(props) {
 
-    const reserveData = useSelector((state) => state.reserve.reserveData);
     const userSummary = useSelector((state) => state.account.userSummary);
 
     const columns = [
@@ -52,29 +51,6 @@ export default function SuppliedAssetTable(props) {
             align: 'center'
         },
     ];
-    // const data = [
-    //     {
-    //         key: '1',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '12%',
-    //         collateral: 'yes',
-    //     },
-    //     {
-    //         key: '2',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '46%',
-    //         collateral: 'yes',
-    //     },
-    //     {
-    //         key: '3',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '23%',
-    //         collateral: 'yes',
-    //     },
-    // ];
 
     const supplyAssetTableList = []
     const data = userSummary ? userSummary.userReservesData.map((data, key) => {

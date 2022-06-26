@@ -6,15 +6,13 @@ import SuppliedAssetTable from './SuppliedAssetTable'
 import SupplyAssetTable from './SupplyAssetTable'
 import { Progress } from 'antd';
 
-
-
 const suppliedtable = { c1: 'Assets', c2: 'Balance', c3: 'APY', c4: 'Collateral' }
 const supplytable = { c1: 'Assets', c2: 'Wallet Balance', c3: 'APY', c4: 'Can be collateral' }
 const borrowedtable = { c1: 'Assets', c2: 'Debt', c3: 'APY', c4: 'APY type' }
 const borrowtable = { c1: 'Assets', c2: 'Available', c3: 'APY,Variable', c4: 'APY,Stable' }
 
-export default function Dashboard() {
-    
+export default function Dashboard(provider) {
+
     return (
         <div className='dashboard' id='dashboard'>
             <Row className='dashboard-details' style={{ height: '10rem', display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
@@ -59,7 +57,7 @@ export default function Dashboard() {
                 </Col>
                 <Col span={12} >
                     <h2>Supply Assets</h2>
-                    <SupplyAssetTable titles={supplytable} />
+                    <SupplyAssetTable titles={supplytable} provider={provider} />
                 </Col>
                 <Col span={12} >
                     <h2>Borrow Assets</h2>

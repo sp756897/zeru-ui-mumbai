@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 export default function BorrowAssetTable(props) {
 
-    const reserveData = useSelector((state) => state.reserve.reserveData);
     const userSummary = useSelector((state) => state.account.userSummary);
 
     const columns = [
@@ -49,45 +48,20 @@ export default function BorrowAssetTable(props) {
     ];
 
     const borrowAssetTableList = []
-    const data = reserveData ? reserveData.map((data, key) => {
-        if (data.isActive) {
-            let balanceValue = 20
-            // console.log("balanceValue: ", balanceValue, "data.name:", data.name, "key: ", key)
+    const data = userSummary ? userSummary.userReservesData.map((data, key) => {
+        if (data.reserve.isActive) {
             borrowAssetTableList.push(
                 {
                     key: key,
-                    asset: data.name,
-                    balance: balanceValue,
-                    apy: data.stableBorrowAPY,
-                    collateral: data.variableBorrowAPY,
+                    asset: data.reserve.name,
+                    balance: userSummary.availableBorrowsUSD,
+                    apy: data.reserve.stableBorrowAPY,
+                    collateral: data.reserve.variableBorrowAPY,
                 }
             )
         }
     }) : ""
 
-    // const data = [
-    //     {
-    //         key: '1',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '12%',
-    //         collateral: '12.33%',
-    //     },
-    //     {
-    //         key: '2',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '46%',
-    //         collateral: '67.54%',
-    //     },
-    //     {
-    //         key: '3',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '23%',
-    //         collateral: '76.4%',
-    //     },
-    // ];
     return (
         <div>
             <Table columns={columns} dataSource={borrowAssetTableList} pagination={false} />
