@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 
 export default function BorrowedAssetTable(props) {
 
-    const reserveData = useSelector((state) => state.reserve.reserveData);
     const userSummary = useSelector((state) => state.account.userSummary);
 
     const columns = [
@@ -48,30 +47,6 @@ export default function BorrowedAssetTable(props) {
             align: 'center'
         },
     ];
-
-    // const data = [
-    //     {
-    //         key: '1',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '12%',
-    //         collateral: 'variable',
-    //     },
-    //     {
-    //         key: '2',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '46%',
-    //         collateral: 'variable',
-    //     },
-    //     {
-    //         key: '3',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '23%',
-    //         collateral: 'variable',
-    //     },
-    // ];
 
     const borrowAssetTableList = []
     const data = userSummary ? userSummary.userReservesData.map((data, key) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Space, Table } from 'antd';
+import { Space, Table } from 'antd';
 import { Switch } from 'antd';
 import { Link } from 'react-router-dom';
 import WithdrawModal from './WithdrawModal';
@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 export default function SuppliedAssetTable(props) {
 
-    const reserveData = useSelector((state) => state.reserve.reserveData);
     const userSummary = useSelector((state) => state.account.userSummary);
 
     const columns = [
@@ -36,8 +35,8 @@ export default function SuppliedAssetTable(props) {
             key: 'collateral',
             dataIndex: 'collateral',
             align: 'center',
-            render: (_, record) => (
-                <Switch defaultChecked />
+            render: (text, record) => (
+                <Switch checked={record.collateral}/>
             ),
         },
         {
@@ -45,41 +44,19 @@ export default function SuppliedAssetTable(props) {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <WithdrawModal />
-                    <SupplyModal a="default" />
+                    <WithdrawModal rowData={record}/>
+                    <SupplyModal a={record}/>
                 </Space>
             ),
             align: 'center'
         },
     ];
-    // const data = [
-    //     {
-    //         key: '1',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '12%',
-    //         collateral: 'yes',
-    //     },
-    //     {
-    //         key: '2',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '46%',
-    //         collateral: 'yes',
-    //     },
-    //     {
-    //         key: '3',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '23%',
-    //         collateral: 'yes',
-    //     },
-    // ];
 
     const supplyAssetTableList = []
     const data = userSummary ? userSummary.userReservesData.map((data, key) => {
         if (true) {
-            let isUsedAsCollateral = data.usageAsCollateralEnabledOnUser
+            // let isUsedAsCollateral = data.usageAsCollateralEnabledOnUser
+            let isUsedAsCollateral = data.reserve.usageAsCollateralEnabled
             let apyType = data.reserve.stableBorrowRateEnabled
             let selectedAPYType = apyType ? data.stableBorrowAPY : data.reserve.variableBorrowAPY
             let apyTypeString = apyType ? "Stable" : "Variable"
@@ -93,8 +70,11 @@ export default function SuppliedAssetTable(props) {
                 }
             )
             console.log(key, data.reserve.name, selectedAPYType, apyTypeString)
+            
 
         }
+        console.log("starts here")
+        console.log(data.reserve.usageAsCollateralEnabled)
     }) : ""
 
     return (

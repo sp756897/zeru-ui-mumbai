@@ -49,37 +49,12 @@ export default function SupplyAssetTable(props) {
     ];
 
     const supplyAssetTableList = []
-
-    // const loadSupplyTable = useCallback(() => {
-    //     let a = reserveData ? reserveData.map((data, key) => {
-    //         // console.log("userWalletBalancesDictionary: ", userWalletBalancesDictionary[data.underlyingAsset], "data name: ", data.name)
-    //         if (data.isActive) {
-    //             let isCollateral = data.usageAsCollateralEnabled ? "Yes" : "No"
-    //             let balanceValue = userWalletBalancesDictionary ? userWalletBalancesDictionary[data.underlyingAsset] : 1
-    //             console.log("balanceValue: ", balanceValue)
-    //             console.log("yes")
-    //             supplyAssetTableList.push(
-    //                 {
-    //                     key: key,
-    //                     asset: data.name,
-    //                     balance: 1,
-    //                     apy: data.supplyAPY,
-    //                     collateral: isCollateral,
-    //                 }
-    //             )
-    //         }
-    //     }) : ""
-    // }, [reserveData, userWalletBalancesDictionary])
-
-    // useEffect(() => {
-    //     loadSupplyTable()
-    // }, [loadSupplyTable])
-
     const data = reserveData ? reserveData.map((data, key) => {
+
         if (data.isActive) {
             let isCollateral = data.usageAsCollateralEnabled ? "Yes" : "No"
-            let balanceValue = userWalletBalancesDictionary ? parseInt(userWalletBalancesDictionary["0x1C21050a572b230ef50006d8833E822D44Dac552"]) : 20
-            // console.log("balanceValue: ", balanceValue, "data.name:", data.name, "key: ", key)
+            let asset = data.underlyingAsset
+            let balanceValue = userWalletBalancesDictionary ? parseInt(userWalletBalancesDictionary[asset]) : 0
             supplyAssetTableList.push(
                 {
                     key: key,
@@ -91,52 +66,6 @@ export default function SupplyAssetTable(props) {
             )
         }
     }) : ""
-
-    // useEffect(() => {
-    //     console.log("userWalletBalancesDictionary: ", userWalletBalancesDictionary)
-    //     const data = reserveData ? reserveData.map((data, key) => {
-    //         if (data.isActive) {
-    //             let isCollateral = data.usageAsCollateralEnabled ? "Yes" : "No"
-    //             // console.log(ethers.utils.formatEther(parseInt(liquidity_minted.data)))
-
-    //             let balanceValue = userWalletBalancesDictionary ? parseInt(userWalletBalancesDictionary[data.underlyingAsset]) : 20
-    //             console.log("balanceValue: ", balanceValue, "data.name:", data.name, "key: ", key)
-    //             supplyAssetTableList.push(
-    //                 {
-    //                     key: key,
-    //                     asset: data.name,
-    //                     balance: balanceValue,
-    //                     apy: data.supplyAPY,
-    //                     collateral: isCollateral,
-    //                 }
-    //             )
-    //         }
-    //     }) : 
-    // [
-    //     {
-    //         key: '1',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '12%',
-    //         collateral: 'yes',
-    //     },
-    //     {
-    //         key: '2',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '46%',
-    //         collateral: 'yes',
-    //     },
-    //     {
-    //         key: '3',
-    //         asset: 'ETH',
-    //         balance: 0,
-    //         apy: '23%',
-    //         collateral: 'yes',
-    //     },
-    // ];
-    //     console.log(supplyAssetTableList)
-    // }, [userWalletBalancesDictionary])
 
     return (
         <div>

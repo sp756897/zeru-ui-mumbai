@@ -6,8 +6,6 @@ import SuppliedAssetTable from './SuppliedAssetTable'
 import SupplyAssetTable from './SupplyAssetTable'
 import { Progress } from 'antd';
 
-
-
 const suppliedtable = { c1: 'Assets', c2: 'Balance', c3: 'APY', c4: 'Collateral' }
 const supplytable = { c1: 'Assets', c2: 'Wallet Balance', c3: 'APY', c4: 'Can be collateral' }
 const borrowedtable = { c1: 'Assets', c2: 'Debt', c3: 'APY', c4: 'APY type' }
@@ -32,16 +30,16 @@ export default function Dashboard() {
                         <p>$60</p>
                     </Col>
                     <Col span={4}>
-                        <div class="net-apy-wrapper">
-                            <div class="net-apy">
+                        <div className="net-apy-wrapper">
+                            <div className="net-apy">
                                 <svg viewBox="0 0 140 140" width="100%">
                                     <path d="M 70 70 L  70 0 A 70 70 0 0 1 70 0 Z" stroke="transparent" fill="#c900c7"></path>
                                     <path d="M 70 70 L  70 0 A 70 70 0 1 1 69.99956017702848 1.381744718642608e-9 Z" stroke="transparent" fill="#c900c7"></path>
                                 </svg>
                             </div>
-                            <div class="net-apy-description">
+                            <div className="net-apy-description">
                                 <label>Net APY</label>
-                                <div class="headline">14.67%</div>
+                                <div className="headline">14.67%</div>
                             </div>
                         </div>
                     </Col>
