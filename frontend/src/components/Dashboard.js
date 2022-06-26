@@ -11,7 +11,7 @@ const supplytable = { c1: 'Assets', c2: 'Wallet Balance', c3: 'APY', c4: 'Can be
 const borrowedtable = { c1: 'Assets', c2: 'Debt', c3: 'APY', c4: 'APY type' }
 const borrowtable = { c1: 'Assets', c2: 'Available', c3: 'APY,Variable', c4: 'APY,Stable' }
 
-export default function Dashboard(provider) {
+export default function Dashboard() {
 
     return (
         <div className='dashboard' id='dashboard'>
@@ -57,7 +57,7 @@ export default function Dashboard(provider) {
                 </Col>
                 <Col span={12} >
                     <h2>Supply Assets</h2>
-                    <SupplyAssetTable titles={supplytable} provider={provider} />
+                    <SupplyAssetTable titles={supplytable} />
                 </Col>
                 <Col span={12} >
                     <h2>Borrow Assets</h2>
